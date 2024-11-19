@@ -1,0 +1,15 @@
+1.ScriptableObject:
+Trong Unity, ScriptableObject là một loại đối tượng đặc biệt không liên quan trực tiếp đến các đối tượng trong Scene mà được sử dụng để lưu trữ dữ liệu. Nó được sử dụng như một data container có thể lưu dữ liệu một cách dễ dàng và tái sử dụng mà không cần phải tạo instance trong Scene như các GameObject.
+
+*Lợi ích của ScriptableObject:
+Quản lý dữ liệu dễ dàng: Giảm thiểu việc lặp lại dữ liệu cho mỗi GameObject, đặc biệt khi dữ liệu được sử dụng chung.
+Tối ưu bộ nhớ: Dữ liệu chỉ được tạo một lần và có thể được tái sử dụng, giúp tối ưu bộ nhớ so với việc tạo nhiều instance của cùng một loại dữ liệu.
+Tách biệt dữ liệu và logic: Giúp tách rời phần dữ liệu khỏi phần logic trong mã của bạn, giúp mã dễ quản lý hơn.
+Hỗ trợ thiết kế dễ dàng hơn: Người thiết kế có thể dễ dàng chỉnh sửa dữ liệu mà không cần phải thay đổi mã.
+
+*So sánh ScriptableObject và Prefab:
+ScriptableObject chỉ lưu trữ dữ liệu, không chứa các thành phần vật lý như Transform hay Rigidbody.
+Prefab chứa toàn bộ thông tin về GameObject, bao gồm các Component, vị trí, vật lý, và logic.
+ScriptableObject thường được dùng cho dữ liệu chung mà nhiều đối tượng có thể sử dụng mà không cần phải khởi tạo mới.
+Prefab thường được dùng khi cần tạo nhiều bản sao của một đối tượng có cùng cấu trúc.
+
