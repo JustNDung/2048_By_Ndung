@@ -1,40 +1,61 @@
 
-using UnityEngine;
+    using UnityEngine;
 
-public class TileGrid : MonoBehaviour
-{
-    public TileRow[] rows {get; private set;}
-    public TileCell[] cells {get; private set;}
-    public int size => cells.Length;
-    public int height => rows.Length;
-    public int width => size / height;
-    public void Awake() {
-        rows = GetComponentsInChildren<TileRow>();
-        cells = GetComponentsInChildren<TileCell>();
-    }
+    public class TileGrid : MonoBehaviour
+    {
+        public TileRow[] rows {get; private set;}
+        // Dễ dàng truy cập và quản lý các ô theo hàng
+        public TileCell[] cells {get; private set;}
+        // Dùng khi thao tác trên toàn bộ lưới mà không cần quan tâm đến cấu trúc hàng
+        public int size => cells.Length;
+        public int height => rows.Length;
+        public int width => size / height;
+        public void Awake() {
+            rows = GetComponentsInChildren<TileRow>();
+            cells = GetComponentsInChildren<TileCell>();
+        }
 
-    public void Start() {
-        for (int y = 0; y < rows.Length; y++) {
-            for (int x = 0; x < rows[y].cells.Length; x++) {
-                rows[y].cells[x].coordinates = new Vector2Int(x, y);
+        public void Start() {
+            for (int y = 0; y < rows.Length; y++) {
+                for (int x = 0; x < rows[y].cells.Length; x++) {
+                    rows[y].cells[x].coordinates = new Vector2Int(x, y);
+                }
             }
         }
-    }
 
-    public TileCell GetRandomEmptyCell() {
-        int index = Random.Range(0, cells.Length);
-        int startingIndex = index;
-        while (cells[index].occupied) {
-            index++;
-            if (index > cells.Length) {
-                index = 0;
-            }
-            if (index == startingIndex) {
+        public TileCell GetAdjacentCell(TileCell cell, Vector2Int direction) {
+            Vector2Int coordinates = cell.coordinates;
+            coordinates.x += direction.x;
+            coordinates.y -= direction.y;
+            return GetCell(coordinates);
+        }
+
+        public TileCell GetCell(Vector2Int coordinates) {
+            return GetCell(coordinates.x, coordinates.y);
+        }
+        
+        public TileCell GetCell(int x, int y) {
+            if (x >= 0 && x < width && y >= 0 && y < height) {
+                return rows[y].cells[x];
+            } else {
                 return null;
-            }   
+            }
         }
-        return cells[index];
+
+        public TileCell GetRandomEmptyCell() {
+            int index = Random.Range(0, cells.Length);
+            int startingIndex = index;
+            while (cells[index].occupied) {
+                index++;
+                if (index >= cells.Length) {
+                    index = 0;
+                }   
+                if (index == startingIndex) {
+                    return null;
+                }   
+            }
+            return cells[index];
+        }
+
+
     }
-
-
-}
